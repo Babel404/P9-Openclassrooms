@@ -1,0 +1,33 @@
+{% extends 'review/base.html' %}
+{% block title %}
+    Connexion
+{% endblock %}
+{% block header_page %}
+    <div class="header_page__login">
+        <span class="header_page__title">Connexion</span>
+    </div>  
+{% endblock %}
+{% block content %}
+    <div class="login_block">
+        <div class="login_block__registration">
+            <p class="login_block__form title">Inscrivez-vous maintenant</p> 
+            <form class="btn" action="/registration/" method="get">
+                <button class="btn">s'inscrire</button>
+            </form>
+        </div> 
+        <form method="post" action="/login/" class="login_block__form">
+            <p class="login_block__form title">Connectez-vous</p>
+                {% csrf_token %}
+                <div class="login_block__form__control">
+                    {{ form.username }}
+                </div> 
+                <div class="login_block__form__control">
+                    {{ form.password }}
+                    {{ form.password.errors }}
+                </div> 
+            <div class="login_block__form__control validate">
+                <button type="submit" class="btn">Se connecter</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

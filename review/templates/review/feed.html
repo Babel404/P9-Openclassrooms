@@ -1,0 +1,34 @@
+{% extends 'review/base.html' %}
+{% block title %}
+    Tableau de bord
+{% endblock %}
+{% block header_page %}
+    <div class="header_page__feed">
+        <span class="header_page__title">Flux</span>
+        <div class="header_page__title__feed__button">
+            <form action="/ticket/" method="get">
+                <button class="btn">Créer un ticket</button>
+            </form>
+            <form action="/review/" method="get">
+                <button class="btn">Créer une critique</button>
+            </form>
+        </div> 
+    </div>    
+{% endblock %}
+{% block content %}
+    <div class="block_feed">
+        <div class="block_feed__posts">
+            {% for post in posts %}
+                {% if post.content_type == 'TICKET' and post not in ticket_review %}
+                    <div class="post">
+                        {% include 'review/snippets/ticket_snippet.html' with post_edit=False %}
+                    </div> 
+                {% elif post.content_type == 'REVIEW' %}
+                    <div class="post">
+                        {% include 'review/snippets/review_snippet.html' with post_edit=False %}
+                    </div> 
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

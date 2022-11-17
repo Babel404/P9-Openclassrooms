@@ -1,0 +1,39 @@
+{% extends 'review/base.html' %}
+{% block title %}
+    Abonnements
+{% endblock %}
+{% block header_page %}
+    <div class="header_page">
+        <span class="header_page__title">Abonnements</span>
+    </div> 
+{% endblock %}
+{% block content %}
+    <div class="subscription_body">
+        <p class="subscription_body__title">Suivre d'autres utilisateurs</p>
+        <form method="post" action="/subsription/" class="subscription_body__form">
+            {% csrf_token %}
+            {{ form.username }}
+            <div class="subscription_body__form__validate">
+                <button type="submit" class="btn">Envoyer</button>
+                {{ form.username.errors }}
+            </div>   
+        </form>
+        <p class="subscription_body__title">Abonnements</p>
+        {% for users in followed %}
+            {% if users.content_type == 'FOLLOWED_USER' %}
+                <div class="subscription_body__followed_users">
+                    <span class="subscription_body__followed_users__name">{{users.followed_user}}</span>
+                    <form action="/unsubscribeuser/{{users.pk}}" method="get">
+                        <button class="btn">se désinscrire</button>
+                    </form>
+                </div>    
+            {% endif %}
+        {% endfor %}
+        <p class="subscription_body__title">Abonnés</p>
+        {% for users in followed %}
+            {% if users.content_type == 'FOLLOWED_BY' %}
+                <span class="subscription_body__followed_by">{{users.user}}</span>
+            {% endif %}    
+        {% endfor %}
+    </div>
+{% endblock %}
